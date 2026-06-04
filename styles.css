@@ -158,13 +158,19 @@ p {
 }
 
 h1 {
-  font-size: clamp(2.25rem, 11vw, 4.2rem);
+  font-size: clamp(1.98rem, 9vw, 4.2rem);
+  hyphens: none;
   letter-spacing: -0.035em;
-  line-height: 0.94;
+  line-height: 0.98;
   margin-bottom: 1rem;
-  max-width: min(100%, 11ch);
-  overflow-wrap: break-word;
+  max-width: 12em;
+  overflow-wrap: normal;
   text-wrap: balance;
+  word-break: normal;
+}
+
+h1 span {
+  display: block;
 }
 
 .hero-copy {
@@ -219,12 +225,19 @@ h1 {
 }
 
 .mini-note {
-  color: var(--muted);
+  background: oklch(0.12 0.012 230 / 0.58);
+  border: 1px solid var(--line);
+  color: var(--ink);
   display: grid;
   gap: 0.35rem;
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   line-height: 1.45;
   margin-top: 1.25rem;
+  padding: 0.85rem 1rem;
+}
+
+.mini-note span + span {
+  color: var(--muted);
 }
 
 .link-strip {
@@ -308,8 +321,8 @@ h1 {
   }
 
   h1 {
-    font-size: clamp(4rem, 8vw, 5.4rem);
-    max-width: 10ch;
+    font-size: clamp(4rem, 7.4vw, 5.3rem);
+    max-width: 12em;
   }
 
   .hero-copy {
