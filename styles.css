@@ -5,7 +5,7 @@
   --surface-strong: oklch(0.18 0.02 230);
   --ink: oklch(0.94 0.01 230);
   --muted: oklch(0.68 0.026 230);
-  --primary: oklch(0.65 0.21 13.5);
+  --primary: oklch(0.52 0.19 13.5);
   --accent: oklch(0.78 0.15 194);
   --acid: oklch(0.82 0.17 142);
   --line: oklch(0.34 0.035 230 / 0.82);
@@ -189,19 +189,16 @@ h1 span {
 .button {
   background: linear-gradient(180deg, var(--surface-strong), var(--surface));
   border: 1px solid var(--line);
-  min-height: 3.4rem;
-  transition:
-    border-color 180ms ease,
-    transform 180ms ease,
-    background 180ms ease;
-}
-
-.button {
   align-items: center;
   display: flex;
   font-weight: 850;
   justify-content: center;
+  min-height: 3.4rem;
   padding: 0.95rem 1rem;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
 }
 
 .button.primary {
@@ -217,8 +214,15 @@ h1 span {
 .button:hover,
 .button:focus-visible {
   border-color: var(--accent);
-  outline: none;
   transform: translateY(-2px);
+}
+
+.button:focus-visible,
+.nav-links a:focus-visible,
+.brand:focus-visible,
+.site-footer a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .mini-note {
