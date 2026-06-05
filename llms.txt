@@ -1,0 +1,19 @@
+# Guido Celada
+
+> Sitio personal de Guido Celada, software engineer en España con más de 12 años de experiencia creando software. Comparte consejos breves, ejemplos reales y criterio técnico sobre inteligencia artificial y automatizaciones para negocios.
+
+El contenido está dirigido a personas y empresas que quieren aplicar tecnología a problemas reales de forma práctica y responsable.
+
+## Sitio
+
+- [Página principal](https://guidocelada.com/): Presentación, experiencia y enlaces oficiales.
+
+## Redes
+
+- [Instagram](https://www.instagram.com/ia.con.guido): Contenido principal sobre IA y automatizaciones para negocios.
+- [TikTok](https://www.tiktok.com/@ia.con.guido): Consejos breves en video.
+- [LinkedIn](https://www.linkedin.com/in/guidocelada): Perfil y experiencia profesional.
+
+## Contacto
+
+- [Email](mailto:hola@guidocelada.com): Contacto profesional.
