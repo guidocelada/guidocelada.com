@@ -1,6 +1,6 @@
 # Guido Celada
 
-> Sitio personal de Guido Celada, software engineer en España con más de 12 años de experiencia creando software. Comparte consejos breves, ejemplos reales y criterio técnico sobre inteligencia artificial y automatizaciones para negocios.
+> Sitio personal de Guido Celada, software engineer en España con más de 13 años de experiencia creando software. Comparte consejos breves, ejemplos reales y criterio técnico sobre inteligencia artificial y automatizaciones para negocios.
 
 El contenido está dirigido a personas y empresas que quieren aplicar tecnología a problemas reales de forma práctica y responsable.
 
