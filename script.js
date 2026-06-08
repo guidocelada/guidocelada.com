@@ -18,6 +18,20 @@ if (hero && hasFinePointer) {
   });
 }
 
+if (hero && !hasFinePointer && !reducedMotion) {
+  hero.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("a")) return;
+
+    const bounds = hero.getBoundingClientRect();
+    const ripple = document.createElement("span");
+    ripple.className = "tap-ripple";
+    ripple.style.left = `${event.clientX - bounds.left}px`;
+    ripple.style.top = `${event.clientY - bounds.top}px`;
+    hero.append(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
+  });
+}
+
 if (canvas && !reducedMotion) {
   const context = canvas.getContext("2d");
   const points = [];

@@ -163,6 +163,21 @@ a {
   z-index: 0;
 }
 
+.tap-ripple {
+  animation: tap-ripple 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border: 1px solid oklch(0.55 0.14 195 / 0.46);
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px oklch(0.66 0.2 18 / 0.08);
+  height: 1.5rem;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+  width: 1.5rem;
+  z-index: 1;
+}
+
 .code-fragments {
   color: oklch(0.35 0.035 220 / 0.16);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -405,6 +420,17 @@ h1 span {
 .site-footer a:focus-visible {
   outline: 3px solid var(--coral);
   outline-offset: 4px;
+}
+
+@keyframes tap-ripple {
+  70% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(7);
+  }
 }
 
 @media (max-width: 520px) {
