@@ -3,9 +3,20 @@ if (year) {
   year.textContent = new Date().getFullYear();
 }
 
+const hero = document.querySelector(".hero");
 const canvas = document.querySelector("#signal-canvas");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+if (hero && hasFinePointer) {
+  hero.addEventListener("pointermove", (event) => {
+    const bounds = hero.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+    hero.style.setProperty("--cursor-x", `${x}%`);
+    hero.style.setProperty("--cursor-y", `${y}%`);
+  });
+}
 
 if (canvas && !reducedMotion) {
   const context = canvas.getContext("2d");
@@ -23,7 +34,7 @@ if (canvas && !reducedMotion) {
   let animationFrame = 0;
 
   function resize() {
-    const ratio = window.devicePixelRatio || 1;
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
     width = canvas.offsetWidth;
     height = canvas.offsetHeight;
     canvas.width = Math.floor(width * ratio);
@@ -32,90 +43,107 @@ if (canvas && !reducedMotion) {
   }
 
   function seedPoints() {
-    const pointCount = width < 520 ? 28 : 56;
+    const pointCount = width < 520 ? 18 : 34;
     points.length = 0;
+
     for (let index = 0; index < pointCount; index += 1) {
       points.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        speed: 0.22 + Math.random() * 0.85,
-        radius: 1 + Math.random() * 2.4,
-        hue: Math.random() > 0.62 ? "accent" : "primary",
+        originX: Math.random() * width,
+        speed: 0.08 + Math.random() * 0.22,
+        radius: 0.8 + Math.random() * 1.5,
+        phase: Math.random() * Math.PI * 2,
+        color: Math.random() > 0.72 ? "coral" : "cyan",
       });
     }
+  }
+
+  function drawPoint(point, index) {
+    point.y -= point.speed;
+    point.x += Math.sin(point.phase + point.y * 0.006 + index) * 0.08;
+
+    if (point.y < -16) {
+      point.y = height + 16;
+      point.x = Math.random() * width;
+      point.originX = point.x;
+    }
+
+    if (pointer.opacity > 0.01) {
+      const dx = pointer.x - point.x;
+      const dy = pointer.y - point.y;
+      const distance = Math.hypot(dx, dy);
+
+      if (distance < 190 && distance > 1) {
+        const pull = (1 - distance / 190) * 0.035 * pointer.opacity;
+        point.x += dx * pull;
+        point.y += dy * pull;
+      } else {
+        point.x += (point.originX - point.x) * 0.0015;
+      }
+    }
+
+    context.beginPath();
+    context.fillStyle =
+      point.color === "coral" ? "oklch(0.58 0.19 18 / 0.52)" : "oklch(0.57 0.13 195 / 0.5)";
+    context.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
+    context.fill();
+  }
+
+  function drawConnections() {
+    for (let i = 0; i < points.length; i += 1) {
+      for (let j = i + 1; j < points.length; j += 1) {
+        const distance = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
+
+        if (distance < 125) {
+          context.beginPath();
+          context.strokeStyle = `oklch(0.38 0.055 205 / ${0.13 * (1 - distance / 125)})`;
+          context.moveTo(points[i].x, points[i].y);
+          context.lineTo(points[j].x, points[j].y);
+          context.stroke();
+        }
+      }
+    }
+  }
+
+  function drawPointerConnections() {
+    if (pointer.opacity <= 0.01) return;
+
+    for (const point of points) {
+      const distance = Math.hypot(point.x - pointer.x, point.y - pointer.y);
+
+      if (distance < 185) {
+        context.beginPath();
+        context.strokeStyle = `oklch(0.42 0.11 195 / ${
+          pointer.opacity * 0.28 * (1 - distance / 185)
+        })`;
+        context.moveTo(pointer.x, pointer.y);
+        context.lineTo(point.x, point.y);
+        context.stroke();
+      }
+    }
+
+    context.save();
+    context.globalAlpha = pointer.opacity;
+    context.strokeStyle = "oklch(0.5 0.14 195 / 0.5)";
+    context.lineWidth = 1;
+    context.beginPath();
+    context.arc(pointer.x, pointer.y, 10, 0, Math.PI * 2);
+    context.stroke();
+    context.restore();
   }
 
   function draw() {
     context.clearRect(0, 0, width, height);
     context.lineWidth = 1;
 
-    pointer.x += (pointer.targetX - pointer.x) * 0.14;
-    pointer.y += (pointer.targetY - pointer.y) * 0.14;
-    pointer.opacity += ((pointer.active ? 1 : 0) - pointer.opacity) * 0.12;
+    pointer.x += (pointer.targetX - pointer.x) * 0.12;
+    pointer.y += (pointer.targetY - pointer.y) * 0.12;
+    pointer.opacity += ((pointer.active ? 1 : 0) - pointer.opacity) * 0.1;
 
-    for (let i = 0; i < points.length; i += 1) {
-      const point = points[i];
-      point.y -= point.speed;
-      point.x += Math.sin((point.y + i * 12) * 0.012) * 0.25;
-
-      if (point.y < -20) {
-        point.y = height + 20;
-        point.x = Math.random() * width;
-      }
-
-      context.beginPath();
-      context.fillStyle =
-        point.hue === "accent" ? "oklch(0.78 0.15 194 / 0.8)" : "oklch(0.65 0.21 13.5 / 0.72)";
-      context.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
-      context.fill();
-
-      for (let j = i + 1; j < points.length; j += 1) {
-        const next = points[j];
-        const distance = Math.hypot(point.x - next.x, point.y - next.y);
-        if (distance < 150) {
-          context.beginPath();
-          context.strokeStyle = `oklch(0.78 0.15 194 / ${0.22 * (1 - distance / 150)})`;
-          context.moveTo(point.x, point.y);
-          context.lineTo(next.x, next.y);
-          context.stroke();
-        }
-      }
-
-      if (pointer.opacity > 0.01) {
-        const pointerDistance = Math.hypot(point.x - pointer.x, point.y - pointer.y);
-        if (pointerDistance < 210) {
-          context.beginPath();
-          context.strokeStyle = `oklch(0.82 0.17 194 / ${
-            pointer.opacity * 0.42 * (1 - pointerDistance / 210)
-          })`;
-          context.moveTo(pointer.x, pointer.y);
-          context.lineTo(point.x, point.y);
-          context.stroke();
-        }
-      }
-    }
-
-    if (pointer.opacity > 0.01) {
-      context.save();
-      context.globalAlpha = pointer.opacity;
-      context.strokeStyle = "oklch(0.82 0.17 194 / 0.78)";
-      context.lineWidth = 1;
-      context.beginPath();
-      context.arc(pointer.x, pointer.y, 8, 0, Math.PI * 2);
-      context.stroke();
-      context.beginPath();
-      context.moveTo(pointer.x - 13, pointer.y);
-      context.lineTo(pointer.x - 6, pointer.y);
-      context.moveTo(pointer.x + 6, pointer.y);
-      context.lineTo(pointer.x + 13, pointer.y);
-      context.moveTo(pointer.x, pointer.y - 13);
-      context.lineTo(pointer.x, pointer.y - 6);
-      context.moveTo(pointer.x, pointer.y + 6);
-      context.lineTo(pointer.x, pointer.y + 13);
-      context.stroke();
-      context.restore();
-    }
-
+    points.forEach(drawPoint);
+    drawConnections();
+    drawPointerConnections();
     animationFrame = window.requestAnimationFrame(draw);
   }
 
@@ -130,8 +158,8 @@ if (canvas && !reducedMotion) {
     draw();
   });
 
-  if (hasFinePointer) {
-    canvas.parentElement.addEventListener("pointermove", (event) => {
+  if (hasFinePointer && hero) {
+    hero.addEventListener("pointermove", (event) => {
       const bounds = canvas.getBoundingClientRect();
       pointer.targetX = event.clientX - bounds.left;
       pointer.targetY = event.clientY - bounds.top;
@@ -144,7 +172,7 @@ if (canvas && !reducedMotion) {
       pointer.active = true;
     });
 
-    canvas.parentElement.addEventListener("pointerleave", () => {
+    hero.addEventListener("pointerleave", () => {
       pointer.active = false;
     });
   }

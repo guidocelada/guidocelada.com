@@ -25,11 +25,11 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://guidocelada.com" />
-    <meta name="theme-color" content="oklch(0.08 0 0)" />
+    <meta name="theme-color" content="#dce9e9" />
     <link rel="canonical" href="https://guidocelada.com" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23101012'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='42'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2346d4dc'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Arial' font-size='28' font-weight='900' fill='%2313191c'%3EGC%3C/text%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -39,31 +39,54 @@
     <header class="site-header" aria-label="Navegación principal">
       <a class="brand" href="/">
         <span class="brand-mark" aria-hidden="true">GC</span>
-        <span>Guido Celada</span>
+        <span class="brand-name">Guido Celada</span>
       </a>
+      <a class="header-link" href="mailto:hola@guidocelada.com">Hablemos</a>
     </header>
 
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <canvas id="signal-canvas" aria-hidden="true"></canvas>
+        <div class="cursor-glow" aria-hidden="true"></div>
+        <div class="code-fragments" aria-hidden="true">
+          <span>const ideas = automate(work)</span>
+          <span>humanJudgement && ai.speed</span>
+          <span>ship(usefulThings)</span>
+          <span>while (curious) learn()</span>
+        </div>
         <div class="hero-inner">
           <div class="hero-copy-block">
-            <p class="hero-kicker">@ia.con.guido</p>
+            <div class="portrait-wrap">
+              <span class="portrait-signal" aria-hidden="true"></span>
+              <img
+                class="portrait"
+                src="assets/guido-profile.jpg"
+                alt="Guido Celada en la WeAreDevelopers World Congress"
+                width="1200"
+                height="1200"
+              />
+            </div>
             <h1 id="hero-title">
-              <span>IA y automatizaciones</span>
-              <span>para negocios</span>
+              <span>Guido Celada</span>
             </h1>
+            <p class="hero-kicker">@ia.con.guido</p>
             <p class="hero-copy">
-              Tips cortos, ejemplos reales y criterio técnico para aplicar tecnología en negocios reales.
+              IA, automatizaciones y software explicados con ejemplos reales y criterio técnico.
             </p>
             <div class="hero-actions" aria-label="Enlaces destacados">
-              <a class="button primary" href="https://www.instagram.com/ia.con.guido">Seguir en Instagram</a>
-              <a class="button secondary" href="https://www.tiktok.com/@ia.con.guido">Ver TikTok</a>
-              <a class="button secondary" href="https://www.linkedin.com/in/guidocelada">Ver LinkedIn</a>
-              <a class="button secondary" href="mailto:hola@guidocelada.com">Contactar por email</a>
+              <a class="button primary" href="https://www.instagram.com/ia.con.guido">
+                Seguir para más tips
+                <span aria-hidden="true">↗</span>
+              </a>
+              <div class="social-links">
+                <a href="https://www.tiktok.com/@ia.con.guido">TikTok</a>
+                <a href="https://www.linkedin.com/in/guidocelada">LinkedIn</a>
+                <a href="mailto:hola@guidocelada.com">Email</a>
+              </div>
             </div>
             <div class="mini-note">
               <span>Software engineer en España</span>
+              <span aria-hidden="true">•</span>
               <span>+13 años creando software</span>
             </div>
           </div>
