@@ -29,10 +29,13 @@ body {
   min-height: 100svh;
   overflow-x: hidden;
   background:
+    linear-gradient(oklch(0.3 0.025 210 / 0.014) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.3 0.025 210 / 0.014) 1px, transparent 1px),
     radial-gradient(circle at 14% 12%, oklch(0.77 0.11 18 / 0.17), transparent 24rem),
     radial-gradient(circle at 88% 18%, oklch(0.77 0.12 195 / 0.25), transparent 28rem),
     linear-gradient(115deg, oklch(0.92 0.025 15 / 0.5), transparent 42%),
     var(--bg);
+  background-size: 42px 42px, 42px 42px, auto, auto, auto, auto;
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
 }
